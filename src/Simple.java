@@ -66,7 +66,7 @@ public class Simple {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String s = readFile("/Users/vignesh/Desktop/JavaProjects/CompilerProj/src/Program");
+        String s = readFile("/Users/vignesh/Desktop/JavaProjects/compilerproject/hello.simple");
         Simple simple = new Simple();
         simple.interpret(s);
     }
