@@ -30,6 +30,11 @@ public class Parser {
                 Expression value = expression();
                 AssignStatement assign = new AssignStatement(this.simple, name, value);
                 statements.add(assign);
+            } else if (matchTokenWithText("goto")){
+                Token labelName = getNextWordToken(TokenType.WORD);
+                statements.add(new GotoStatement(this.simple, labelName.getText()));
+            } else if (matchTokenWithType(TokenType.LABEL)) {
+                this.simple.getLabels().put(prevToken(1).getText(), statements.size());
             }
             else {
                 break;
@@ -66,6 +71,11 @@ public class Parser {
         if (!token.getText().equals(name)) return false;
         position++;
         return true;
+    }
+
+    private Token getNextWordToken(String name){
+        if (!matchTokenWithType(name)) throw new Error("Expected " + name + ".");
+        return prevToken(1);
     }
 
     private boolean matchTokensWithTypes(String t1, String t2){

@@ -7,9 +7,11 @@ public class Simple {
      */
     private int currentStatement;
     private Map<String, Value> memory;
+    private Map<String, Integer> labels;
 
     public Simple() {
         memory = new HashMap<String, Value>();
+        labels = new HashMap<>();
     }
     public int getCurrentStatement() {
         return currentStatement;
@@ -25,6 +27,14 @@ public class Simple {
 
     public void setMemory(Map<String, Value> memory) {
         this.memory = memory;
+    }
+
+    public Map<String, Integer> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Map<String, Integer> labels) {
+        this.labels = labels;
     }
 
     public void interpret(String contents){

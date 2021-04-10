@@ -8,3 +8,6 @@ print a
 print b
 c = "hi mother"
 print c
+top: count = 0
+     print count
+     goto top
