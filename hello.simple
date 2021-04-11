@@ -2,7 +2,7 @@
 print "Demonstrating print statements, press <Enter> twice to continue"
 scan x
 print "Hello, world!"
-print "Hi Mom"
+print "Hello"
 
 # Variable Assignments
 print "Demonstrating variables, press <Enter> twice to continue"
@@ -11,7 +11,7 @@ a = 1
 b = a
 print a
 print b
-c = "hi mother"
+c = "This is a string assignment"
 print c
 
 # Math Operations
@@ -40,7 +40,7 @@ print "You just entered: "
 print e
 
 # Simple Loop With If Condition
-print "Demonstrating loops and if conditions, press <Enter> twice to continue"
+print "Demonstrating loops, goto and if statements, press <Enter> twice to continue"
 scan t
 i = 10
 loop:
@@ -50,7 +50,9 @@ i = i - 1
 goto loop
 
 end:
-print "The end"
+print ""
+print "End of program"
+print "Bye!!"
 
 
 
