@@ -1,16 +1,27 @@
 import java.util.*;
 public class Parser {
+    //List of Tokens to parse
     private ArrayList<SimpleToken> simpleTokens;
+    //holds the position in Tokens arraylist, which is currently being parsed
     private int position;
+    //handle to the simple object
     private Simple simple;
 
-
+    /**
+     * Constrcutor for Parser
+     * @param s - simple object
+     * @param arr - arraylist
+     */
     public Parser(Simple s, ArrayList<SimpleToken> arr){
         this.simple = s;
         this.simpleTokens = arr;
         position = 0;
     }
 
+    /**
+     * parseTokens and return an arraylist
+     * @return arraylist
+     */
     public ArrayList<SimpleStatement> parseTokens(){
         ArrayList<SimpleStatement> simpleStatements = new ArrayList<>();
 
@@ -46,12 +57,19 @@ public class Parser {
         }
         return simpleStatements;
     }
-
+    /**
+     * creates a scanner statement
+     * @return
+     */
     private ScanStatement buildScanStatement() {
         String inputVar = consumeTokenWithType(TokenType.WORD).getText();
         return new ScanStatement(this.simple, inputVar);
     }
 
+    /**
+     * builds an IfStatement
+     * @return
+     */
     private IfStatement buildIfStatement() {
         SimpleExpression condition = buildExpression();
         consumeTokenWithText("then");
@@ -59,25 +77,45 @@ public class Parser {
         return new IfStatement(this.simple, condition, label);
     }
 
+    /**
+     * builds a JumptoStatement
+     * @return
+     */
     private JumptoStatement buildJumptoStatement() {
         SimpleToken labelName = consumeTokenWithType(TokenType.WORD);
         return new JumptoStatement(this.simple, labelName.getText());
     }
-
+    /**
+     * builds an AssigntoStatement
+     * @return
+     */
     private AssignStatement buildAssignStatement() {
         String name = prevToken(2).getText();
         SimpleExpression value = buildExpression();
         return new AssignStatement(this.simple, name, value);
     }
-
+    /**
+     * builds a PrintStatement
+     * @return
+     */
     private PrintStatement buildPrintStatement() {
         SimpleExpression printExpr = buildExpression();
         return new PrintStatement(printExpr);
     }
 
+    /**
+     * Retrieves the currentToken
+     * @return
+     */
     private SimpleToken getCurrToken (){
         return getToken(0);
     }
+
+    /**
+     * Gets the token offset from current position
+     * @param offset
+     * @return
+     */
     private SimpleToken getToken (int offset){
         int index = position + offset;
         if (index >= simpleTokens.size()){
@@ -85,11 +123,23 @@ public class Parser {
         }
         return simpleTokens.get(index);
     }
+
+    /**
+     * uses the negative of offset from position to get a previous token
+     * @param offset
+     * @return
+     */
     private SimpleToken prevToken(int offset){
         int index = position - offset;
         return simpleTokens.get(index);
     }
 
+    /**
+     * tries to match the current token with a passed value of type
+     * increments position if its a match
+     * @param type
+     * @return
+     */
     private boolean matchTokenWithType(String type){
         SimpleToken simpleToken = getCurrToken();
         if (!simpleToken.getType().equals(type)) return false;
@@ -97,6 +147,12 @@ public class Parser {
         return true;
     }
 
+    /**
+     * tries to match the token with a passed text
+     * increments position if there is in fact a match
+     * @param name
+     * @return
+     */
     private boolean matchTokenWithText(String name) {
         SimpleToken simpleToken = getCurrToken();
         if (!simpleToken.getType().equals(TokenType.WORD)) return false;
@@ -105,11 +161,23 @@ public class Parser {
         return true;
     }
 
+    /**
+     * tries to match the token with text
+     * if there is a match, increments position and returns the token
+     * @param text
+     * @return
+     */
     private SimpleToken consumeTokenWithText(String text){
         if (!matchTokenWithText(text)) throw new Error("Expected " + text + ".");
         return prevToken(1);
     }
 
+    /**
+     * tries to match a token with a type
+     * if there is a match, increments position and returns the token
+     * @param type
+     * @return
+     */
     private SimpleToken consumeTokenWithType (String type) {
         SimpleToken currToken = getCurrToken();
         if (!currToken.getType().equals(type)){
@@ -121,6 +189,13 @@ public class Parser {
         }
     }
 
+    /**
+     * matches two consecutive tokens
+     * if there is a match, increment position by 2
+     * @param t1
+     * @param t2
+     * @return
+     */
     private boolean matchTokensWithTypes(String t1, String t2){
         SimpleToken tok1 = getCurrToken();
         SimpleToken tok2 = getToken(1);
@@ -134,6 +209,10 @@ public class Parser {
         return true;
     }
 
+    /**
+     * tries to match StringValue expressions, NumberValue expressions, VariableExpressions
+     * @return
+     */
     private SimpleExpression singleValuedExpression() {
         if (matchTokenWithType(TokenType.STRING)) {
             return new StringValue(prevToken(1).getText());
@@ -145,6 +224,10 @@ public class Parser {
         throw new Error("Couldn't parse");
     }
 
+    /**
+     * builds simple/composite expressions
+     * @return
+     */
     private SimpleExpression buildExpression() {
         SimpleExpression simpleExpression = singleValuedExpression();
 

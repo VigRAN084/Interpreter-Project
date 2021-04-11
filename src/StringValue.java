@@ -18,6 +18,10 @@ public class StringValue implements SimpleValue {
         return "string";
     }
 
+    /**
+     * returns the string value
+     * @return
+     */
     @Override
     public SimpleValue evaluate() {
         return this;

@@ -9,6 +9,10 @@ public class VariableExpression implements SimpleExpression {
         this.name = name;
     }
 
+    /**
+     * stores the value of the variable in the memory
+     * @return
+     */
     @Override
     public SimpleValue evaluate() {
         Map<String, SimpleValue> memory = this.simple.getMemory();

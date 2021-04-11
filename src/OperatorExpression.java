@@ -3,6 +3,13 @@ public class OperatorExpression implements SimpleExpression {
     private final SimpleExpression left;
     private final char operator;
     private final SimpleExpression right;
+
+    /**
+     * constructor fo OperatorExpression.java
+     * @param left - left expression
+     * @param operator - such as +,-,%,etc.
+     * @param right - right expression
+     */
     public OperatorExpression(SimpleExpression left, char operator,
                               SimpleExpression right) {
         this.left = left;
@@ -10,6 +17,10 @@ public class OperatorExpression implements SimpleExpression {
         this.right = right;
     }
 
+    /**
+     * Checks the type of operator and performs the operation accordingly
+     * @return
+     */
     public SimpleValue evaluate() {
         if (this.operator == '=')
             return handleEquals();

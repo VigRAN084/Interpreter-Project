@@ -12,6 +12,11 @@ public class NumberValue implements SimpleValue {
     public String toString() {
         return String.valueOf(val);
     }
+
+    /**
+     * returns the NumberValue
+     * @return
+     */
     @Override
     public SimpleValue evaluate() {
         return this;

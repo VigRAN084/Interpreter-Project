@@ -19,7 +19,7 @@ public class Tokenizer {
             TokenType.OPERATOR
     };
     /**
-     * generate simpleTokens
+     * Read every character of the input source code and extract tokens
      * skim unwanted comments, etc.
      * @param source
      * @return
