@@ -53,7 +53,6 @@ public class Tokenizer {
                 } else if (c == '#'){
                     state = COMMENT_STATE;
                 }
-
             } else if (state.equals(WORD_STATE)){
                 if (Character.isLetterOrDigit(c)) {
                     token += c;
@@ -67,8 +66,6 @@ public class Tokenizer {
                     state = DEFAULT_STATE;
                     i--;
                 }
-
-
             } else if (state.equals(NUMBER_STATE)){
                 if (Character.isDigit(c)) {
                     token += c;
