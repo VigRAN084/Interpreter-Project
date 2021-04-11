@@ -1,7 +1,13 @@
-Vignesh Rangarajan
+README
+-------
+
+
+Author: Vignesh Rangarajan
 Period 1
 April 10th, 2021
 CompilerProject
+
+--------------------------
 
 The language is called Simple. There are two sample code attachments:
 
@@ -12,10 +18,14 @@ scanners, print functionalities, and the other project specifications.
 to showcase how the program generates compilation errors
 
 How to run the program:
+-----------------------
+
 The main class is called Simple.java. It takes the .simple file as an argument
 when in the run configurations.
 
 Supported Statements:
+----------------------
+
 1. Assignments of Variables - number and string accepted
 2. If Statements
 3. Print Statements
@@ -23,12 +33,16 @@ Supported Statements:
 5. Scan Statements
 
 Supported Expressions:
+----------------------
+
 1. Variable Expressions
 2. Arithmetic Expressions
 3. Number Values
 4. String Values
 
 Supported TokenTypes:
+---------------------
+
 1. =,+,-,*,/,%,<,>
 2. Comments begin with '#'
 3. Word tokens (any word, like if, then, etc.)
@@ -38,7 +52,26 @@ Supported TokenTypes:
 7. New Lines
 8. EOF - indicating the end of the file
 
+Important Classes:
+------------------
+
+1. Simple.java - Main Class
+2. Tokenizer.java - Reads file as string and extracts supported tokens
+3. Parser.java - Goes through the list of tokens and builds executable Statements
+
+Important Interfaces:
+----------------------
+
+1. SimpleExpression.java - contains the evaluate() method, implemented by OperatorExpression and
+VariableExpression
+2. SimpleValue.java - inherits from SimpleExpression.java, and defines toNumber(), toString(), and
+getType() methods; implemented by StringValue and NumberValue
+3. SimpleStatement.java - Defines the execute() method and implemented by PrintStatement.java,
+JumptoStatement.java, AssignStatement.java, etc.
+
 Important Methods:
+------------------
+
 1. Simple.run() - main entry point, runs the .simple code
 2. Tokenizer.extractTokens() - extracts the tokens from the program, and returns a list of Token
 Objects.
@@ -46,9 +79,4 @@ Objects.
 also looks for compilation issues and generates error messages for the user.
 4. Simple.execute() - Executes the individual Statement objects from the Parser.parse() method and
 outputs
-
-1. Tokenizer - Reads file as string and extracts supported tokens
-2. Parser - Goes through the list of tokens and builds executable Statements
-3. Simple - Main Class
-
 
