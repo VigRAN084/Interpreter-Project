@@ -1,6 +1,6 @@
-public class PrintSimpleStatements implements SimpleStatements {
+public class PrintStatement implements SimpleStatement {
     private SimpleExpression simpleExpression;
-    public PrintSimpleStatements(SimpleExpression e){
+    public PrintStatement(SimpleExpression e){
         this.simpleExpression = e;
     }
     @Override

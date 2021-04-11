@@ -11,8 +11,8 @@ public class Parser {
         position = 0;
     }
 
-    public ArrayList<SimpleStatements> parseTokens(){
-        ArrayList<SimpleStatements> simpleStatements = new ArrayList<>();
+    public ArrayList<SimpleStatement> parseTokens(){
+        ArrayList<SimpleStatement> simpleStatements = new ArrayList<>();
 
         while(position < simpleTokens.size()) {
             //if the source code consisted of new lines, skip them
@@ -22,26 +22,30 @@ public class Parser {
                 //if the token was a print token, parse the next
                 // token to get the unitExpression to print
                 SimpleExpression printExpr = expression();
-                simpleStatements.add(new PrintSimpleStatements(printExpr));
+                simpleStatements.add(new PrintStatement(printExpr));
             } else if (matchTokensWithTypes(TokenType.WORD, TokenType.EQUALS)){
                 //if the token is a word followed by EQUALS, it's
                 //an assignment statement so name and value required
                 String name = prevToken(2).getText();
                 SimpleExpression value = expression();
-                AssignSimpleStatements assign = new AssignSimpleStatements(this.simple, name, value);
+                AssignStatement assign = new AssignStatement(this.simple, name, value);
                 simpleStatements.add(assign);
             } else if (matchTokenWithText("goto")){
                 SimpleToken labelName = consumeTokenWithType(TokenType.WORD);
-                simpleStatements.add(new GotoSimpleStatements(this.simple, labelName.getText()));
+                simpleStatements.add(new GotoStatement(this.simple, labelName.getText()));
             } else if (matchTokenWithType(TokenType.LABEL)) {
                 this.simple.getLabels().put(prevToken(1).getText(), simpleStatements.size());
             } else if (matchTokenWithText("if")){
                 SimpleExpression condition = expression();
                 consumeTokenWithText("then");
                 String label = consumeTokenWithType(TokenType.WORD).getText();
-                simpleStatements.add(new IfSimpleStatements(this.simple, condition, label));
+                simpleStatements.add(new IfStatement(this.simple, condition, label));
             } else if (matchTokenWithType(TokenType.EOF)){
                 //do nothing
+            } else if (matchTokenWithText("scan")){
+                String inputVar = consumeTokenWithType(TokenType.WORD).getText();
+                InputStatement statement = new InputStatement(this.simple, inputVar);
+                simpleStatements.add(statement);
             } else {
                 SimpleToken currToken = getCurrToken();
                 System.out.println("Error in line " + currToken.getLineNumber() + ": Unrecognized token => " + currToken.getText());
@@ -112,11 +116,11 @@ public class Parser {
 
     private SimpleExpression unitExpression() {
         if (matchTokenWithType(TokenType.STRING)) {
-            return new StringSimpleValue(prevToken(1).getText());
+            return new StringValue(prevToken(1).getText());
         } else if (matchTokenWithType(TokenType.NUMBER)){
-            return new NumberSimpleValue(Double.parseDouble(prevToken(1).getText()));
+            return new NumberValue(Double.parseDouble(prevToken(1).getText()));
         } else if (matchTokenWithType(TokenType.WORD)){
-            return new VariableSimpleExpression(this.simple, prevToken(1).getText());
+            return new VariableExpression(this.simple, prevToken(1).getText());
         }
         throw new Error("Couldn't parse");
     }
@@ -128,7 +132,7 @@ public class Parser {
                 matchTokenWithType(TokenType.EQUALS)) {
             char operator = prevToken(1).getText().charAt(0);
             SimpleExpression right = unitExpression();
-            simpleExpression = new OperatorSimpleExpression(simpleExpression, operator, right);
+            simpleExpression = new OperatorExpression(simpleExpression, operator, right);
         }
 
         return simpleExpression;

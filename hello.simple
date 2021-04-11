@@ -1,8 +1,12 @@
 # Simple Print Commands
+print "Demonstrating print statements, press <Enter> twice to continue"
+scan x
 print "Hello, world!"
 print "Hi Mom"
 
 # Variable Assignments
+print "Demonstrating variables, press <Enter> twice to continue"
+scan y
 a = 1
 b = a
 print a
@@ -11,16 +15,33 @@ c = "hi mother"
 print c
 
 # Math Operations
+print "Demonstrating mathematical operations, press <Enter> twice to continue"
+scan z
 math:
 v = 1 + 1
 print v
+print "8 / 3 = "
 print 8 / 3
+print "5 * 2 = "
 print 5 * 2
+print "5 - 2 = "
 print 5 - 2
+print "5 % 2 = "
 print 5 % 2
+print "4 % 2 = "
 print 4 % 2
 
+#Scanner example
+print "Demonstrating scanner, press <Enter> twice to continue"
+scan u
+print "Enter an input: "
+scan e
+print "You just entered: "
+print e
+
 # Simple Loop With If Condition
+print "Demonstrating loops and if conditions, press <Enter> twice to continue"
+scan t
 i = 10
 loop:
 if i = 0 then end
@@ -29,7 +50,7 @@ i = i - 1
 goto loop
 
 end:
-print "the end"
+print "The end"
 
 
 

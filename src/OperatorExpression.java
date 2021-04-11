@@ -1,10 +1,10 @@
-public class OperatorSimpleExpression implements SimpleExpression {
+public class OperatorExpression implements SimpleExpression {
 
     private final SimpleExpression left;
     private final char operator;
     private final SimpleExpression right;
-    public OperatorSimpleExpression(SimpleExpression left, char operator,
-                                    SimpleExpression right) {
+    public OperatorExpression(SimpleExpression left, char operator,
+                              SimpleExpression right) {
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -39,12 +39,12 @@ public class OperatorSimpleExpression implements SimpleExpression {
         SimpleValue rightVal = right.evaluate();
         if (leftVal.getType().equals("number")) {
             if (leftVal.toNumber() > rightVal.toNumber())
-                return new NumberSimpleValue(1);
+                return new NumberValue(1);
             else {
-                return new NumberSimpleValue(0);
+                return new NumberValue(0);
             }
         }
-        return new NumberSimpleValue(0);
+        return new NumberValue(0);
     }
 
     /**
@@ -56,12 +56,12 @@ public class OperatorSimpleExpression implements SimpleExpression {
         SimpleValue rightVal = right.evaluate();
         if (leftVal.getType().equals("number")) {
             if (leftVal.toNumber() < rightVal.toNumber())
-                return new NumberSimpleValue(1);
+                return new NumberValue(1);
             else {
-                return new NumberSimpleValue(0);
+                return new NumberValue(0);
             }
         }
-        return new NumberSimpleValue(0);
+        return new NumberValue(0);
     }
 
     /**
@@ -71,7 +71,7 @@ public class OperatorSimpleExpression implements SimpleExpression {
     private SimpleValue handleDivision() {
         SimpleValue leftVal = left.evaluate();
         SimpleValue rightVal = right.evaluate();
-        return new NumberSimpleValue(leftVal.toNumber() /
+        return new NumberValue(leftVal.toNumber() /
                 rightVal.toNumber());
     }
 
@@ -82,7 +82,7 @@ public class OperatorSimpleExpression implements SimpleExpression {
     private SimpleValue handleMultiply() {
         SimpleValue leftVal = left.evaluate();
         SimpleValue rightVal = right.evaluate();
-        return new NumberSimpleValue(leftVal.toNumber() *
+        return new NumberValue(leftVal.toNumber() *
                 rightVal.toNumber());
     }
 
@@ -93,7 +93,7 @@ public class OperatorSimpleExpression implements SimpleExpression {
     private SimpleValue handleSubtract() {
         SimpleValue leftVal = left.evaluate();
         SimpleValue rightVal = right.evaluate();
-        return new NumberSimpleValue(leftVal.toNumber() -
+        return new NumberValue(leftVal.toNumber() -
                 rightVal.toNumber());
     }
 
@@ -105,10 +105,10 @@ public class OperatorSimpleExpression implements SimpleExpression {
         SimpleValue leftVal = left.evaluate();
         SimpleValue rightVal = right.evaluate();
         if (leftVal.getType().equals("number")) {
-            return new NumberSimpleValue(leftVal.toNumber() +
+            return new NumberValue(leftVal.toNumber() +
                     rightVal.toNumber());
         } else {
-            return new StringSimpleValue(leftVal.toString() +
+            return new StringValue(leftVal.toString() +
                     rightVal.toString());
         }
     }
@@ -122,15 +122,15 @@ public class OperatorSimpleExpression implements SimpleExpression {
         SimpleValue rightVal = right.evaluate();
         if (leftVal.getType().equals("number")) {
             if (leftVal.toNumber() == rightVal.toNumber())
-                return new NumberSimpleValue(1);
+                return new NumberValue(1);
             else {
-                return new NumberSimpleValue(0);
+                return new NumberValue(0);
             }
         } else {
             if (leftVal.toString().equals(rightVal.toString()))
-                return new NumberSimpleValue(1);
+                return new NumberValue(1);
             else {
-                return new NumberSimpleValue(0);
+                return new NumberValue(0);
             }
         }
     }
@@ -142,7 +142,7 @@ public class OperatorSimpleExpression implements SimpleExpression {
     private SimpleValue handleModulus() {
         SimpleValue leftVal = left.evaluate();
         SimpleValue rightVal = right.evaluate();
-        return new NumberSimpleValue(leftVal.toNumber() %
+        return new NumberValue(leftVal.toNumber() %
                 rightVal.toNumber());
     }
 

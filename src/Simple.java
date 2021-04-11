@@ -9,12 +9,13 @@ public class Simple {
     private Map<String, SimpleValue> memory;
     private Map<String, Integer> labels;
     private boolean compileErrors = false;
-
+    private Scanner scanner = null;
 
 
     public Simple() {
         memory = new HashMap<String, SimpleValue>();
         labels = new HashMap<>();
+        scanner = new Scanner(System.in);
     }
     public int getCurrentStatement() {
         return currentStatement;
@@ -48,6 +49,14 @@ public class Simple {
         this.compileErrors = compileErrors;
     }
 
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     /**
      * start interpreting the program
      * @param contents
@@ -57,7 +66,7 @@ public class Simple {
         //skim unwanted comments, etc.
         ArrayList<SimpleToken> simpleTokens = Tokenizer.extractTokens(contents);
         Parser parser = new Parser(this, simpleTokens);
-        ArrayList<SimpleStatements> simpleStatements = parser.parseTokens();
+        ArrayList<SimpleStatement> simpleStatements = parser.parseTokens();
         // Interpret until we're done.
         if (!this.compileErrors){
             currentStatement = 0;

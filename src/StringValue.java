@@ -1,6 +1,6 @@
-public class StringSimpleValue implements SimpleValue {
+public class StringValue implements SimpleValue {
     private String val;
-    public StringSimpleValue(String s){
+    public StringValue(String s){
         this.val = s;
     }
     @Override

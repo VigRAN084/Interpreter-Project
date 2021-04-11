@@ -1,6 +1,6 @@
-public class NumberSimpleValue implements SimpleValue {
+public class NumberValue implements SimpleValue {
     private double val;
-    public NumberSimpleValue(double d){
+    public NumberValue(double d){
         this.val = d;
     }
     @Override

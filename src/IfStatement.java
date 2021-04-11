@@ -1,8 +1,8 @@
-public class IfSimpleStatements implements SimpleStatements {
+public class IfStatement implements SimpleStatement {
     private Simple simple;
     private SimpleExpression simpleExpression;
     private String label;
-    public IfSimpleStatements(Simple simple, SimpleExpression simpleExpression, String label){
+    public IfStatement(Simple simple, SimpleExpression simpleExpression, String label){
         this.simple = simple;
         this.simpleExpression = simpleExpression;
         this.label = label;
