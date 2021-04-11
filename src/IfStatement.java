@@ -15,7 +15,8 @@ public class IfStatement implements SimpleStatement {
         if (this.simple.getLabels().containsKey(this.label)){
             double value = this.simpleExpression.evaluate().toNumber();
             if (value != 0){
-                this.simple.setCurrentStatement(this.simple.getLabels().get(this.label).intValue());
+                Integer labelIndex = this.simple.getLabels().get(this.label);
+                this.simple.setCurrentStatement(labelIndex.intValue());
             }
         }
     }

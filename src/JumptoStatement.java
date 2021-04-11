@@ -12,7 +12,8 @@ public class JumptoStatement implements SimpleStatement {
      */
     public void execute() {
         if (this.simple.getLabels().containsKey(this.label)){
-            this.simple.setCurrentStatement(simple.getLabels().get(label).intValue());
+            Integer stmtIndex = simple.getLabels().get(label);
+            this.simple.setCurrentStatement(stmtIndex.intValue());
         }
     }
 }
