@@ -7,19 +7,19 @@ public class Tokenizer {
     private static String TOKENIZE_STATE_COMMENT = "COMMENT";
     private static String TOKENIZE_STATE_NUMBER = "NUMBER";
 
-    private static String charTokens = "\n=+-*/%<>";
-    private static String[] tokenTypes = { TokenType.LINE, TokenType.EQUALS,
+    private static String charTokens = "=+-*/%<>";
+    private static String[] tokenTypes = { TokenType.EQUALS,
             TokenType.OPERATOR, TokenType.OPERATOR, TokenType.OPERATOR,
             TokenType.OPERATOR, TokenType.OPERATOR, TokenType.OPERATOR,
             TokenType.OPERATOR
     };
 
-    public static ArrayList<Token> extractTokens (String source){
-        ArrayList<Token> tokens = new ArrayList<>();
+    public static ArrayList<SimpleToken> extractTokens (String source){
+        ArrayList<SimpleToken> simpleTokens = new ArrayList<>();
         String token = "";
         String state = TOKENIZE_STATE_DEFAULT;
-
-        // Many tokens are a single character, like operators and ().
+        int lineNumber = 1;
+        // Many simpleTokens are a single character, like operators and ().
 
         for (int i = 0; i < source.length(); i++){
             char c = source.charAt(i);
@@ -27,7 +27,12 @@ public class Tokenizer {
                 if (charTokens.indexOf(c) != -1){
                     String tokenChar = Character.toString(c);
                     String tokenType = tokenTypes[charTokens.indexOf(c)];
-                    tokens.add(new Token(tokenChar, tokenType));
+                    simpleTokens.add(new SimpleToken(tokenChar, tokenType, lineNumber));
+                } else if (c == '\n'){
+                    String tokenChar = Character.toString(c);
+                    String tokenType = TokenType.LINE;
+                    lineNumber++;
+                    simpleTokens.add(new SimpleToken(tokenChar, tokenType, lineNumber));
                 } else if (Character.isLetter(c)){
                     token += c;
                     state= TOKENIZE_STATE_WORD;
@@ -36,7 +41,7 @@ public class Tokenizer {
                     state = TOKENIZE_STATE_NUMBER;
                 } else if (c == '"'){
                     state = TOKENIZE_STATE_STRING;
-                } else if (c == '\''){
+                } else if (c == '#'){
                     state = TOKENIZE_STATE_COMMENT;
                 }
 
@@ -44,11 +49,11 @@ public class Tokenizer {
                 if (Character.isLetterOrDigit(c)) {
                     token += c;
                 } else if (c == ':') {
-                    tokens.add(new Token(token, TokenType.LABEL));
+                    simpleTokens.add(new SimpleToken(token, TokenType.LABEL, lineNumber));
                     token = "";
                     state = TOKENIZE_STATE_DEFAULT;
                 } else {
-                    tokens.add(new Token(token, TokenType.WORD));
+                    simpleTokens.add(new SimpleToken(token, TokenType.WORD, lineNumber));
                     token = "";
                     state = TOKENIZE_STATE_DEFAULT;
                     i--; // Reprocess this character in the default state.
@@ -59,14 +64,14 @@ public class Tokenizer {
                 if (Character.isDigit(c)) {
                     token += c;
                 } else {
-                    tokens.add(new Token(token, TokenType.NUMBER));
+                    simpleTokens.add(new SimpleToken(token, TokenType.NUMBER, lineNumber));
                     token = "";
                     state = TOKENIZE_STATE_DEFAULT;
                     i--; // Reprocess this character in the default state.
                 }
             } else if (state.equals(TOKENIZE_STATE_STRING)){
                 if (c == '"') {
-                    tokens.add(new Token(token, TokenType.STRING));
+                    simpleTokens.add(new SimpleToken(token, TokenType.STRING, lineNumber));
                     token = "";
                     state = TOKENIZE_STATE_DEFAULT;
                 } else {
@@ -76,9 +81,10 @@ public class Tokenizer {
             } else if (state.equals(TOKENIZE_STATE_COMMENT)){
                 if (c == '\n') {
                     state = TOKENIZE_STATE_DEFAULT;
+                    lineNumber++;
                 }
             }
         }
-        return tokens;
+        return simpleTokens;
     }
 }

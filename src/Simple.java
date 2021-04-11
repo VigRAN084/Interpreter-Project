@@ -8,6 +8,9 @@ public class Simple {
     private int currentStatement;
     private Map<String, SimpleValue> memory;
     private Map<String, Integer> labels;
+    private boolean compileErrors = false;
+
+
 
     public Simple() {
         memory = new HashMap<String, SimpleValue>();
@@ -37,18 +40,32 @@ public class Simple {
         this.labels = labels;
     }
 
+    public boolean isCompileErrors() {
+        return compileErrors;
+    }
+
+    public void setCompileErrors(boolean compileErrors) {
+        this.compileErrors = compileErrors;
+    }
+
+    /**
+     * start interpreting the program
+     * @param contents
+     */
     public void interpret(String contents){
-        //generate tokens
+        //generate simpleTokens
         //skim unwanted comments, etc.
-        ArrayList<Token> tokens = Tokenizer.extractTokens(contents);
-        Parser parser = new Parser(this, tokens);
+        ArrayList<SimpleToken> simpleTokens = Tokenizer.extractTokens(contents);
+        Parser parser = new Parser(this, simpleTokens);
         ArrayList<SimpleStatements> simpleStatements = parser.parseTokens();
         // Interpret until we're done.
-        currentStatement = 0;
-        while (currentStatement < simpleStatements.size()) {
-            int thisStatement = currentStatement;
-            currentStatement++;
-            simpleStatements.get(thisStatement).execute();
+        if (!this.compileErrors){
+            currentStatement = 0;
+            while (currentStatement < simpleStatements.size()) {
+                int thisStatement = currentStatement;
+                currentStatement++;
+                simpleStatements.get(thisStatement).execute();
+            }
         }
     }
 
@@ -76,7 +93,7 @@ public class Simple {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String s = readFile("/Users/vignesh/Desktop/JavaProjects/compilerproject/hello.simple");
+        String s = readFile(args[0]);
         Simple simple = new Simple();
         simple.interpret(s);
     }

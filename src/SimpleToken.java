@@ -1,14 +1,15 @@
 import java.util.ArrayList;
 
-public class Token {
+public class SimpleToken {
 
 
-
+    private int lineNumber;
     private String type;
     private String text;
-    public Token (String te, String ty){
+    public SimpleToken(String te, String ty, int lineNumber){
         this.type = ty;
         this.text = te;
+        this.lineNumber = lineNumber;
     }
 
     public String getType() {
@@ -27,5 +28,11 @@ public class Token {
         this.text = text;
     }
 
+    public int getLineNumber() {
+        return lineNumber;
+    }
 
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
 }

@@ -33,3 +33,11 @@ print "the end"
 
 
 
+
+
+# Testing Compilation Errors
+a = 1
+print a
+b = 1
+ewedewfregwg
+erw
