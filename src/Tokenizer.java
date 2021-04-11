@@ -11,13 +11,6 @@ public class Tokenizer {
     private static String COMMENT_STATE = "COMMENT";
     //if character starts with a digit and ends with a digit
     private static String NUMBER_STATE = "NUMBER";
-
-    private static String charTokens = "=+-*/%<>";
-    private static String[] tokenTypes = { TokenType.EQUALS,
-            TokenType.OPERATOR, TokenType.OPERATOR, TokenType.OPERATOR,
-            TokenType.OPERATOR, TokenType.OPERATOR, TokenType.OPERATOR,
-            TokenType.OPERATOR
-    };
     /**
      * Read every character of the input source code and extract tokens
      * skim unwanted comments, etc.
@@ -33,10 +26,12 @@ public class Tokenizer {
         for (int i = 0; i < source.length(); i++){
             char c = source.charAt(i);
             if (state.equals(DEFAULT_STATE)){
-                if (charTokens.indexOf(c) != -1){
+                if ("+-*/%<>".indexOf(c) != -1){
                     String tokenChar = Character.toString(c);
-                    String tokenType = tokenTypes[charTokens.indexOf(c)];
-                    simpleTokens.add(new SimpleToken(tokenChar, tokenType, lineNumber));
+                    simpleTokens.add(new SimpleToken(tokenChar, TokenType.OPERATOR, lineNumber));
+                } else if (c == '='){
+                    String tokenChar = Character.toString(c);
+                    simpleTokens.add(new SimpleToken(tokenChar, TokenType.EQUALS, lineNumber));
                 } else if (c == '\n'){
                     String tokenChar = Character.toString(c);
                     String tokenType = TokenType.LINE;
