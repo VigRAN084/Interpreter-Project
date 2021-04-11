@@ -1,22 +1,31 @@
 import java.io.*;
 import java.util.*;
 public class Simple {
-    /**
-     * Start interpreting contents of source code
-     * @param contents
-     */
+    //currently executing statement
     private int currentStatement;
+    //used for storing variables
     private Map<String, SimpleValue> memory;
+    //used for storing labels; the value of this map contains the statement
+    //number corresponding to the first statement in this label block
     private Map<String, Integer> labels;
+    //compiler errors - true if program has compilation errors, false if otherwise
     private boolean compileErrors = false;
+    //used for gathering user inputs
     private Scanner scanner = null;
 
-
+    /**
+     * constructor for Simple.java class
+     */
     public Simple() {
         memory = new HashMap<String, SimpleValue>();
         labels = new HashMap<>();
         scanner = new Scanner(System.in);
     }
+
+    /**
+     * Getters and setters for private variables in the Simple.java class
+     * @return
+     */
     public int getCurrentStatement() {
         return currentStatement;
     }
@@ -56,9 +65,8 @@ public class Simple {
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
     }
-
     /**
-     * start interpreting the program
+     * start running the program
      * @param contents
      */
     public void run(String contents){
@@ -69,7 +77,10 @@ public class Simple {
         if (!this.compileErrors) executeStatements(simpleStatements);
 
     }
-
+    /**
+     * Executes the statements from the ArrayList of SimpleStatements
+     * @param simpleStatements
+     */
     private void executeStatements(ArrayList<SimpleStatement> simpleStatements) {
         currentStatement = 0;
         while (currentStatement < simpleStatements.size()) {
@@ -78,10 +89,9 @@ public class Simple {
             simpleStatements.get(thisStatement).execute();
         }
     }
-
     /**
      * Read source code
-     * @return
+     * @return the source code as a string
      * @throws FileNotFoundException
      */
     private static String readFile(String fileName) throws FileNotFoundException {
@@ -102,6 +112,11 @@ public class Simple {
         return s;
     }
 
+    /**
+     * main method of Simple.java
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         String s = readFile(args[0]);
         Simple simple = new Simple();
