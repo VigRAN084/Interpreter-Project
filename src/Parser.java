@@ -111,12 +111,13 @@ public class Parser {
     }
 
     private SimpleToken consumeTokenWithType (String type) {
-        SimpleToken currSimpleToken = getCurrToken();
-        if (!currSimpleToken.getType().equals(type)){
+        SimpleToken currToken = getCurrToken();
+        if (!currToken.getType().equals(type)){
             throw new Error ("Expecting " + type);
         }
         else {
-            return simpleTokens.get(position++);
+            position++;
+            return currToken;
         }
     }
 

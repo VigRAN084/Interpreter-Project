@@ -1,11 +1,11 @@
 # Simple Print Commands
-print "Demonstrating print statements, press <Enter> twice to continue"
+print "Demonstrating print statements, press <Enter> to continue"
 scan x
 print "Hello, world!"
 print "Hello"
 
 # Variable Assignments
-print "Demonstrating variables, press <Enter> twice to continue"
+print "Demonstrating variables, press <Enter> to continue"
 scan y
 a = 1
 b = a
@@ -15,7 +15,7 @@ c = "This is a string assignment"
 print c
 
 # Math Operations
-print "Demonstrating mathematical operations, press <Enter> twice to continue"
+print "Demonstrating mathematical operations, press <Enter> to continue"
 scan z
 math:
 v = 1 + 1
@@ -32,7 +32,7 @@ print "4 % 2 = "
 print 4 % 2
 
 #Scanner example
-print "Demonstrating scanner, press <Enter> twice to continue"
+print "Demonstrating scanner, press <Enter> to continue"
 scan u
 print "Enter an input: "
 scan e
@@ -40,7 +40,7 @@ print "You just entered: "
 print e
 
 #String Compare
-print "Demonstarting String compare, press <Enter> twice to continue"
+print "Demonstarting String compare, press <Enter> to continue"
 scan g
 print "Enter yes or no"
 scan yesnoinput
@@ -57,7 +57,7 @@ jumpto loopdemo
 
 # Simple Loop With If Condition
 loopdemo:
-print "Demonstrating loops, goto and if statements, press <Enter> twice to continue"
+print "Demonstrating loops, goto and if statements, press <Enter> to continue"
 scan t
 i = 40
 loop:
