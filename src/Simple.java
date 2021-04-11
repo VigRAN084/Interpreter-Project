@@ -6,11 +6,11 @@ public class Simple {
      * @param contents
      */
     private int currentStatement;
-    private Map<String, Value> memory;
+    private Map<String, SimpleValue> memory;
     private Map<String, Integer> labels;
 
     public Simple() {
-        memory = new HashMap<String, Value>();
+        memory = new HashMap<String, SimpleValue>();
         labels = new HashMap<>();
     }
     public int getCurrentStatement() {
@@ -21,11 +21,11 @@ public class Simple {
         this.currentStatement = currentStatement;
     }
 
-    public Map<String, Value> getMemory() {
+    public Map<String, SimpleValue> getMemory() {
         return memory;
     }
 
-    public void setMemory(Map<String, Value> memory) {
+    public void setMemory(Map<String, SimpleValue> memory) {
         this.memory = memory;
     }
 
@@ -40,15 +40,15 @@ public class Simple {
     public void interpret(String contents){
         //generate tokens
         //skim unwanted comments, etc.
-        ArrayList<Token> tokens = Token.generateTokens(contents);
+        ArrayList<Token> tokens = Tokenizer.extractTokens(contents);
         Parser parser = new Parser(this, tokens);
-        ArrayList<Statement> statements = parser.parseTokens();
+        ArrayList<SimpleStatements> simpleStatements = parser.parseTokens();
         // Interpret until we're done.
         currentStatement = 0;
-        while (currentStatement < statements.size()) {
+        while (currentStatement < simpleStatements.size()) {
             int thisStatement = currentStatement;
             currentStatement++;
-            statements.get(thisStatement).execute();
+            simpleStatements.get(thisStatement).execute();
         }
     }
 

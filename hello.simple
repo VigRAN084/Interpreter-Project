@@ -8,6 +8,17 @@ print a
 print b
 c = "hi mother"
 print c
+
 top: count = 0
      print count
-     goto top
+     if count = 1 then top
+
+v = 1 + 1
+print v
+print 8 / 3
+print 5 * 2
+print 5 - 2
+print 5 % 2
+print 4 % 2
+if "je" = "je" then top
+

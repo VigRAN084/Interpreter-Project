@@ -1,8 +1,8 @@
-public class AssignStatement implements Statement{
+public class AssignSimpleStatements implements SimpleStatements {
     private String name;
-    private Expression value;
+    private SimpleExpression value;
     private Simple simple;
-    public AssignStatement(Simple simple, String name, Expression value){
+    public AssignSimpleStatements(Simple simple, String name, SimpleExpression value){
         this.name = name;
         this.simple = simple;
         this.value = value;

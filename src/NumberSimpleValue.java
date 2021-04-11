@@ -1,6 +1,6 @@
-public class NumberValue implements Value {
+public class NumberSimpleValue implements SimpleValue {
     private double val;
-    public NumberValue(double d){
+    public NumberSimpleValue(double d){
         this.val = d;
     }
     @Override
@@ -13,7 +13,11 @@ public class NumberValue implements Value {
         return String.valueOf(val);
     }
     @Override
-    public Value evaluate() {
+    public SimpleValue evaluate() {
         return this;
+    }
+    @Override
+    public String getType() {
+        return "number";
     }
 }

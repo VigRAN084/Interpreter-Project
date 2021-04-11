@@ -11,8 +11,8 @@ public class Parser {
         position = 0;
     }
 
-    public ArrayList<Statement> parseTokens(){
-        ArrayList<Statement> statements = new ArrayList<>();
+    public ArrayList<SimpleStatements> parseTokens(){
+        ArrayList<SimpleStatements> simpleStatements = new ArrayList<>();
 
         while(true) {
             //if the source code consisted of new lines, skip them
@@ -20,27 +20,32 @@ public class Parser {
 
             if (matchTokenWithText("print")){
                 //if the token was a print token, parse the next
-                // token to get the expression to print
-                Expression printExpr = expression();
-                statements.add(new PrintStatement(printExpr));
+                // token to get the unitExpression to print
+                SimpleExpression printExpr = expression();
+                simpleStatements.add(new PrintSimpleStatements(printExpr));
             } else if (matchTokensWithTypes(TokenType.WORD, TokenType.EQUALS)){
                 //if the token is a word followed by EQUALS, it's
                 //an assignment statement so name and value required
                 String name = prevToken(2).getText();
-                Expression value = expression();
-                AssignStatement assign = new AssignStatement(this.simple, name, value);
-                statements.add(assign);
+                SimpleExpression value = expression();
+                AssignSimpleStatements assign = new AssignSimpleStatements(this.simple, name, value);
+                simpleStatements.add(assign);
             } else if (matchTokenWithText("goto")){
-                Token labelName = getNextWordToken(TokenType.WORD);
-                statements.add(new GotoStatement(this.simple, labelName.getText()));
+                Token labelName = consumeTokenWithType(TokenType.WORD);
+                simpleStatements.add(new GotoSimpleStatements(this.simple, labelName.getText()));
             } else if (matchTokenWithType(TokenType.LABEL)) {
-                this.simple.getLabels().put(prevToken(1).getText(), statements.size());
+                this.simple.getLabels().put(prevToken(1).getText(), simpleStatements.size());
+            } else if (matchTokenWithText("if")){
+                SimpleExpression condition = expression();
+                consumeTokenWithText("then");
+                String label = consumeTokenWithType(TokenType.WORD).getText();
+                simpleStatements.add(new IfSimpleStatements(this.simple, condition, label));
             }
             else {
                 break;
             }
         }
-        return statements;
+        return simpleStatements;
     }
 
     private Token getCurrToken (){
@@ -73,9 +78,19 @@ public class Parser {
         return true;
     }
 
-    private Token getNextWordToken(String name){
-        if (!matchTokenWithType(name)) throw new Error("Expected " + name + ".");
+    private Token consumeTokenWithText(String text){
+        if (!matchTokenWithText(text)) throw new Error("Expected " + text + ".");
         return prevToken(1);
+    }
+
+    private Token consumeTokenWithType (String type) {
+        Token currToken = getCurrToken();
+        if (!currToken.getType().equals(type)){
+            throw new Error ("Expecting " + type);
+        }
+        else {
+            return tokens.get(position++);
+        }
     }
 
     private boolean matchTokensWithTypes(String t1, String t2){
@@ -91,14 +106,27 @@ public class Parser {
         return true;
     }
 
-    private Expression expression() {
+    private SimpleExpression unitExpression() {
         if (matchTokenWithType(TokenType.STRING)) {
-            return new StringValue(prevToken(1).getText());
+            return new StringSimpleValue(prevToken(1).getText());
         } else if (matchTokenWithType(TokenType.NUMBER)){
-            return new NumberValue(Double.parseDouble(prevToken(1).getText()));
+            return new NumberSimpleValue(Double.parseDouble(prevToken(1).getText()));
         } else if (matchTokenWithType(TokenType.WORD)){
-            return new VariableExpression(this.simple, prevToken(1).getText());
+            return new VariableSimpleExpression(this.simple, prevToken(1).getText());
         }
         throw new Error("Couldn't parse");
+    }
+    private SimpleExpression expression() {
+        SimpleExpression simpleExpression = unitExpression();
+
+        // Keep building operator expressions as long as we have operators.
+        if (matchTokenWithType(TokenType.OPERATOR) ||
+                matchTokenWithType(TokenType.EQUALS)) {
+            char operator = prevToken(1).getText().charAt(0);
+            SimpleExpression right = unitExpression();
+            simpleExpression = new OperatorSimpleExpression(simpleExpression, operator, right);
+        }
+
+        return simpleExpression;
     }
 }

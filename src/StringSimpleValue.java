@@ -1,6 +1,6 @@
-public class StringValue implements Value{
+public class StringSimpleValue implements SimpleValue {
     private String val;
-    public StringValue(String s){
+    public StringSimpleValue(String s){
         this.val = s;
     }
     @Override
@@ -14,7 +14,12 @@ public class StringValue implements Value{
     }
 
     @Override
-    public Value evaluate() {
+    public String getType() {
+        return "string";
+    }
+
+    @Override
+    public SimpleValue evaluate() {
         return this;
     }
 }
