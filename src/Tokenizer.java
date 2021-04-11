@@ -13,7 +13,12 @@ public class Tokenizer {
             TokenType.OPERATOR, TokenType.OPERATOR, TokenType.OPERATOR,
             TokenType.OPERATOR
     };
-
+    /**
+     * generate simpleTokens
+     * skim unwanted comments, etc.
+     * @param source
+     * @return
+     */
     public static ArrayList<SimpleToken> extractTokens (String source){
         ArrayList<SimpleToken> simpleTokens = new ArrayList<>();
         String token = "";

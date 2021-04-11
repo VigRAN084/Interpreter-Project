@@ -15,45 +15,64 @@ public class Parser {
         ArrayList<SimpleStatement> simpleStatements = new ArrayList<>();
 
         while(position < simpleTokens.size()) {
-            //if the source code consisted of new lines, skip them
-            while(matchTokenWithType(TokenType.LINE));
-
             if (matchTokenWithText("print")){
-                //if the token was a print token, parse the next
-                // token to get the unitExpression to print
-                SimpleExpression printExpr = expression();
-                simpleStatements.add(new PrintStatement(printExpr));
+                PrintStatement stmt = buildPrintStatement();
+                simpleStatements.add(stmt);
             } else if (matchTokensWithTypes(TokenType.WORD, TokenType.EQUALS)){
-                //if the token is a word followed by EQUALS, it's
-                //an assignment statement so name and value required
-                String name = prevToken(2).getText();
-                SimpleExpression value = expression();
-                AssignStatement assign = new AssignStatement(this.simple, name, value);
+                AssignStatement assign = buildAssignStatement();
                 simpleStatements.add(assign);
-            } else if (matchTokenWithText("goto")){
-                SimpleToken labelName = consumeTokenWithType(TokenType.WORD);
-                simpleStatements.add(new GotoStatement(this.simple, labelName.getText()));
+            } else if (matchTokenWithText("jumpto")){
+                JumptoStatement jumptoStatement = buildJumptoStatement();
+                simpleStatements.add(jumptoStatement);
             } else if (matchTokenWithType(TokenType.LABEL)) {
                 this.simple.getLabels().put(prevToken(1).getText(), simpleStatements.size());
             } else if (matchTokenWithText("if")){
-                SimpleExpression condition = expression();
-                consumeTokenWithText("then");
-                String label = consumeTokenWithType(TokenType.WORD).getText();
-                simpleStatements.add(new IfStatement(this.simple, condition, label));
-            } else if (matchTokenWithType(TokenType.EOF)){
-                //do nothing
-            } else if (matchTokenWithText("scan")){
-                String inputVar = consumeTokenWithType(TokenType.WORD).getText();
-                InputStatement statement = new InputStatement(this.simple, inputVar);
+                IfStatement stmt = buildIfStatement();
+                simpleStatements.add(stmt);
+            }  else if (matchTokenWithText("scan")){
+                ScanStatement statement = buildScanStatement();
                 simpleStatements.add(statement);
+            } else if (matchTokenWithType(TokenType.EOF)) {
+                //do nothing
+            } else if (matchTokenWithType(TokenType.LINE)) {
+                //do nothing
             } else {
                 SimpleToken currToken = getCurrToken();
-                System.out.println("Error in line " + currToken.getLineNumber() + ": Unrecognized token => " + currToken.getText());
+                String mesg = "Error in line " + currToken.getLineNumber() + ": Unrecognized token => " + currToken.getText();
+                System.out.println(mesg);
                 this.simple.setCompileErrors(true);
                 position++;
             }
         }
         return simpleStatements;
+    }
+
+    private ScanStatement buildScanStatement() {
+        String inputVar = consumeTokenWithType(TokenType.WORD).getText();
+        return new ScanStatement(this.simple, inputVar);
+    }
+
+    private IfStatement buildIfStatement() {
+        SimpleExpression condition = buildExpression();
+        consumeTokenWithText("then");
+        String label = consumeTokenWithType(TokenType.WORD).getText();
+        return new IfStatement(this.simple, condition, label);
+    }
+
+    private JumptoStatement buildJumptoStatement() {
+        SimpleToken labelName = consumeTokenWithType(TokenType.WORD);
+        return new JumptoStatement(this.simple, labelName.getText());
+    }
+
+    private AssignStatement buildAssignStatement() {
+        String name = prevToken(2).getText();
+        SimpleExpression value = buildExpression();
+        return new AssignStatement(this.simple, name, value);
+    }
+
+    private PrintStatement buildPrintStatement() {
+        SimpleExpression printExpr = buildExpression();
+        return new PrintStatement(printExpr);
     }
 
     private SimpleToken getCurrToken (){
@@ -114,7 +133,7 @@ public class Parser {
         return true;
     }
 
-    private SimpleExpression unitExpression() {
+    private SimpleExpression singleValuedExpression() {
         if (matchTokenWithType(TokenType.STRING)) {
             return new StringValue(prevToken(1).getText());
         } else if (matchTokenWithType(TokenType.NUMBER)){
@@ -124,14 +143,15 @@ public class Parser {
         }
         throw new Error("Couldn't parse");
     }
-    private SimpleExpression expression() {
-        SimpleExpression simpleExpression = unitExpression();
+
+    private SimpleExpression buildExpression() {
+        SimpleExpression simpleExpression = singleValuedExpression();
 
         // Keep building operator expressions as long as we have operators.
         if (matchTokenWithType(TokenType.OPERATOR) ||
                 matchTokenWithType(TokenType.EQUALS)) {
             char operator = prevToken(1).getText().charAt(0);
-            SimpleExpression right = unitExpression();
+            SimpleExpression right = singleValuedExpression();
             simpleExpression = new OperatorExpression(simpleExpression, operator, right);
         }
 

@@ -39,20 +39,36 @@ scan e
 print "You just entered: "
 print e
 
+#String Compare
+print "Demonstarting String compare, press <Enter> twice to continue"
+scan g
+print "Enter yes or no"
+scan yesnoinput
+if yesnoinput = "yes" then yes
+if yesnoinput = "no" then no
+
+yes:
+print "Executing yes section"
+jumpto loopdemo
+
+no:
+print "Executing no section"
+jumpto loopdemo
+
 # Simple Loop With If Condition
+loopdemo:
 print "Demonstrating loops, goto and if statements, press <Enter> twice to continue"
 scan t
-i = 10
+i = 40
 loop:
-if i = 0 then end
+if i = 60 then end
 print i
-i = i - 1
-goto loop
+i = i + 2
+jumpto loop
 
 end:
 print ""
 print "End of program"
-print "Bye!!"
 
 
 

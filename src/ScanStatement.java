@@ -1,9 +1,9 @@
 import java.util.*;
-public class InputStatement implements SimpleStatement {
+public class ScanStatement implements SimpleStatement {
     private Simple simple;
     private String name;
 
-    public InputStatement(Simple simple, String name){
+    public ScanStatement(Simple simple, String name){
         this.simple = simple;
         this.name = name;
     }

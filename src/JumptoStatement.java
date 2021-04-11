@@ -1,7 +1,7 @@
-public class GotoStatement implements SimpleStatement {
+public class JumptoStatement implements SimpleStatement {
     private Simple simple;
     private String label;
-    public GotoStatement(Simple simple, String label){
+    public JumptoStatement(Simple simple, String label){
         this.label = label;
         this.simple = simple;
     }

@@ -61,20 +61,21 @@ public class Simple {
      * start interpreting the program
      * @param contents
      */
-    public void interpret(String contents){
-        //generate simpleTokens
-        //skim unwanted comments, etc.
+    public void run(String contents){
         ArrayList<SimpleToken> simpleTokens = Tokenizer.extractTokens(contents);
         Parser parser = new Parser(this, simpleTokens);
         ArrayList<SimpleStatement> simpleStatements = parser.parseTokens();
         // Interpret until we're done.
-        if (!this.compileErrors){
-            currentStatement = 0;
-            while (currentStatement < simpleStatements.size()) {
-                int thisStatement = currentStatement;
-                currentStatement++;
-                simpleStatements.get(thisStatement).execute();
-            }
+        if (!this.compileErrors) executeStatements(simpleStatements);
+
+    }
+
+    private void executeStatements(ArrayList<SimpleStatement> simpleStatements) {
+        currentStatement = 0;
+        while (currentStatement < simpleStatements.size()) {
+            int thisStatement = currentStatement;
+            currentStatement++;
+            simpleStatements.get(thisStatement).execute();
         }
     }
 
@@ -104,6 +105,6 @@ public class Simple {
     public static void main(String[] args) throws FileNotFoundException {
         String s = readFile(args[0]);
         Simple simple = new Simple();
-        simple.interpret(s);
+        simple.run(s);
     }
 }
