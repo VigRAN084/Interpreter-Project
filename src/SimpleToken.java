@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-
+/**
+ * Class representing an individual token in the Simple Programming Language
+ */
 public class SimpleToken {
-
-
     private int lineNumber;
     private String type;
     private String text;

@@ -7,6 +7,10 @@ public class IfStatement implements SimpleStatement {
         this.simpleExpression = simpleExpression;
         this.label = label;
     }
+
+    /**
+     * If the expression evaluates to a nonzero value, then jump to the label
+     */
     public void execute(){
         if (this.simple.getLabels().containsKey(this.label)){
             double value = this.simpleExpression.evaluate().toNumber();
