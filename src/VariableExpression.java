@@ -14,11 +14,11 @@ public class VariableExpression implements SimpleExpression {
      * @return
      */
     @Override
-    public SimpleValue evaluate() {
-        Map<String, SimpleValue> memory = this.simple.getMemory();
+    public ValueExpression evaluate() {
+        Map<String, ValueExpression> memory = this.simple.getMemory();
         if (memory.containsKey(name)){
             return memory.get(name);
         }
-        return new NumberValue(0);
+        return new NumberValueExpression(0);
     }
 }

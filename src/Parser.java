@@ -210,14 +210,14 @@ public class Parser {
     }
 
     /**
-     * tries to match StringValue expressions, NumberValue expressions, VariableExpressions
+     * tries to match StringValueExpression expressions, NumberValueExpression expressions, VariableExpressions
      * @return
      */
     private SimpleExpression singleValuedExpression() {
         if (matchTokenWithType(TokenType.STRING)) {
-            return new StringValue(prevToken(1).getText());
+            return new StringValueExpression(prevToken(1).getText());
         } else if (matchTokenWithType(TokenType.NUMBER)){
-            return new NumberValue(Double.parseDouble(prevToken(1).getText()));
+            return new NumberValueExpression(Double.parseDouble(prevToken(1).getText()));
         } else if (matchTokenWithType(TokenType.WORD)){
             return new VariableExpression(this.simple, prevToken(1).getText());
         }

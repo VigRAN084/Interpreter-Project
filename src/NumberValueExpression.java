@@ -1,6 +1,6 @@
-public class NumberValue implements SimpleValue {
+public class NumberValueExpression implements ValueExpression {
     private double val;
-    public NumberValue(double d){
+    public NumberValueExpression(double d){
         this.val = d;
     }
     @Override
@@ -14,11 +14,11 @@ public class NumberValue implements SimpleValue {
     }
 
     /**
-     * returns the NumberValue
+     * returns the NumberValueExpression
      * @return
      */
     @Override
-    public SimpleValue evaluate() {
+    public ValueExpression evaluate() {
         return this;
     }
     @Override

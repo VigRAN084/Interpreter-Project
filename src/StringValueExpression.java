@@ -1,6 +1,6 @@
-public class StringValue implements SimpleValue {
+public class StringValueExpression implements ValueExpression {
     private String val;
-    public StringValue(String s){
+    public StringValueExpression(String s){
         this.val = s;
     }
     @Override
@@ -23,7 +23,7 @@ public class StringValue implements SimpleValue {
      * @return
      */
     @Override
-    public SimpleValue evaluate() {
+    public ValueExpression evaluate() {
         return this;
     }
 }

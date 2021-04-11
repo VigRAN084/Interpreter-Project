@@ -20,6 +20,6 @@ public class ScanStatement implements SimpleStatement {
     public void execute() {
         Scanner scanner = this.simple.getScanner();
         String s = scanner.nextLine();
-        this.simple.getMemory().put(this.name, new StringValue(s));
+        this.simple.getMemory().put(this.name, new StringValueExpression(s));
     }
 }

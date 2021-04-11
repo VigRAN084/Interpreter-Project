@@ -4,7 +4,7 @@ public class Simple {
     //currently executing statement
     private int currentStatement;
     //used for storing variables
-    private Map<String, SimpleValue> memory;
+    private Map<String, ValueExpression> memory;
     //used for storing labels; the value of this map contains the statement
     //number corresponding to the first statement in this label block
     private Map<String, Integer> labels;
@@ -17,7 +17,7 @@ public class Simple {
      * constructor for Simple.java class
      */
     public Simple() {
-        memory = new HashMap<String, SimpleValue>();
+        memory = new HashMap<String, ValueExpression>();
         labels = new HashMap<>();
         scanner = new Scanner(System.in);
     }
@@ -34,11 +34,11 @@ public class Simple {
         this.currentStatement = currentStatement;
     }
 
-    public Map<String, SimpleValue> getMemory() {
+    public Map<String, ValueExpression> getMemory() {
         return memory;
     }
 
-    public void setMemory(Map<String, SimpleValue> memory) {
+    public void setMemory(Map<String, ValueExpression> memory) {
         this.memory = memory;
     }
 
