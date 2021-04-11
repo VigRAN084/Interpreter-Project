@@ -32,6 +32,9 @@ public class Tokenizer {
                 } else if (c == '='){
                     String tokenChar = Character.toString(c);
                     simpleTokens.add(new SimpleToken(tokenChar, TokenType.EQUALS, lineNumber));
+                } else if (c == '~'){
+                    String tokenChar = Character.toString(c);
+                    simpleTokens.add(new SimpleToken(tokenChar, TokenType.NOT_EQUALS, lineNumber));
                 } else if (c == '\n'){
                     String tokenChar = Character.toString(c);
                     String tokenType = TokenType.LINE;

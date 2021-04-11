@@ -10,4 +10,5 @@ public interface TokenType {
     public static String OPERATOR = "OPERATOR";
     public static String EOF = "EOF";
     public static String LINE = "LINE";
+    public static String NOT_EQUALS = "NOT_EQUALS";
 }

@@ -24,6 +24,8 @@ public class OperatorExpression implements SimpleExpression {
     public ValueExpression evaluate() {
         if (this.operator == '=')
             return handleEquals();
+        else if (this.operator == '~')
+            return handleNotEquals();
         else if (this.operator == '+')
             return handleAdd();
         else if (this.operator == '-')
@@ -139,6 +141,23 @@ public class OperatorExpression implements SimpleExpression {
             }
         } else {
             if (leftVal.toString().equals(rightVal.toString()))
+                return new NumberValueExpression(1);
+            else {
+                return new NumberValueExpression(0);
+            }
+        }
+    }
+    private ValueExpression handleNotEquals() {
+        ValueExpression leftVal = left.evaluate();
+        ValueExpression rightVal = right.evaluate();
+        if (leftVal.getType().equals("number")){
+            if (leftVal.toNumber() != rightVal.toNumber())
+                return new NumberValueExpression(1);
+            else {
+                return new NumberValueExpression(0);
+            }
+        } else {
+            if (!leftVal.toString().equals(rightVal.toString()))
                 return new NumberValueExpression(1);
             else {
                 return new NumberValueExpression(0);

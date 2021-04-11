@@ -233,7 +233,7 @@ public class Parser {
 
         // Keep building operator expressions as long as we have operators.
         if (matchTokenWithType(TokenType.OPERATOR) ||
-                matchTokenWithType(TokenType.EQUALS)) {
+                matchTokenWithType(TokenType.EQUALS) || matchTokenWithType(TokenType.NOT_EQUALS)) {
             char operator = prevToken(1).getText().charAt(0);
             SimpleExpression right = singleValuedExpression();
             simpleExpression = new OperatorExpression(simpleExpression, operator, right);

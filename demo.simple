@@ -2,7 +2,6 @@
 print "Demonstrating print statements, press <Enter> to continue"
 scan x
 print "Hello, world!"
-print "Hello"
 
 # Variable Assignments
 print "Demonstrating variables, press <Enter> to continue"
@@ -19,6 +18,7 @@ print "Demonstrating mathematical operations, press <Enter> to continue"
 scan z
 math:
 v = 1 + 1
+print "1 + 1 = "
 print v
 print "8 / 3 = "
 print 8 / 3
@@ -39,13 +39,56 @@ scan e
 print "You just entered: "
 print e
 
+#Demonstrating > for numbers
+print "Demonstrating > and < for numbers"
+jk = 9
+if jk > 5 then greaterthan
+
+greaterthan:
+print "9 is greater than 5"
+
+#Demonstrating > for numbers
+print "Demonstrating > and < for numbers"
+jp = 5
+if jp < 1000000 then lessthan
+
+lessthan:
+print "5 is less than 1000000"
+
+#Not equal to String and Number Demonstration
+print "Demonstrating not equal to comparisons for strings"
+print "Enter string1"
+scan string1
+print "Enter string2"
+scan string2
+if string1 ~ string2 then stringnotequal
+if string1 = string2 then stringequal
+
+stringnotequal:
+print "Strings are not equal"
+jumpto notequalnum
+
+stringequal:
+print "Strings are equal"
+jumpto notequalnum
+
+#Not equal to for number
+notequalnum:
+print "Demonstrating not equal to comparisons for numbers"
+if 10 ~ 920238 then wrongnum
+
+wrongnum:
+print "10 is not equal to 920238"
+jumpto stringcompare
+
 #String Compare
-print "Demonstarting String compare, press <Enter> to continue"
+stringcompare:
+print "Demonstrating String compare, press <Enter> to continue"
 scan g
 print "Enter yes or no"
 scan yesnoinput
 if yesnoinput = "yes" then yes
-if yesnoinput = "no" then no
+if yesnoinput ~ "yes" then no
 
 yes:
 print "Executing yes section"
@@ -57,7 +100,7 @@ jumpto loopdemo
 
 # Simple Loop With If Condition
 loopdemo:
-print "Demonstrating loops, goto and if statements, press <Enter> to continue"
+print "Demonstrating loops, goto, number comparisons, and if statements, press <Enter> to continue"
 scan t
 i = 40
 loop:
@@ -65,6 +108,8 @@ if i = 60 then end
 print i
 i = i + 2
 jumpto loop
+
+
 
 end:
 print ""
