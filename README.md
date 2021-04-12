@@ -67,7 +67,7 @@ VariableExpression
 2. ValueExpression.java - inherits from SimpleExpression.java, and defines toNumber(), toString(), and
 getType() methods; implemented by StringValueExpression and NumberValueExpression
 3. SimpleStatement.java - Defines the execute() method and implemented by PrintStatement.java,
-JumptoStatement.java, AssignStatement.java, etc.
+JumptoStatement.java, AssignStatement.java, IfElseStatement.java, etc.
 
 Important Methods:
 ------------------
