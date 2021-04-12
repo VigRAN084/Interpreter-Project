@@ -83,12 +83,12 @@ jumpto stringcompare
 
 #String Compare
 stringcompare:
-print "Demonstrating String compare, press <Enter> to continue"
+print "Demonstrating String compare and IfElse, press <Enter> to continue"
 scan g
 print "Enter yes or no"
 scan yesnoinput
-if yesnoinput = "yes" then yes
-if yesnoinput ~ "yes" then no
+if yesnoinput = "yes" then yes else no
+
 
 yes:
 print "Executing yes section"

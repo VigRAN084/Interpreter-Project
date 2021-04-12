@@ -38,7 +38,7 @@ public class Parser {
             } else if (matchTokenWithType(TokenType.LABEL)) {
                 this.simple.getLabels().put(prevToken(1).getText(), simpleStatements.size());
             } else if (matchTokenWithText("if")){
-                IfStatement stmt = buildIfStatement();
+                IfElseStatement stmt = buildIfStatement();
                 simpleStatements.add(stmt);
             }  else if (matchTokenWithText("scan")){
                 ScanStatement statement = buildScanStatement();
@@ -67,14 +67,21 @@ public class Parser {
     }
 
     /**
-     * builds an IfStatement
+     * builds an IfElseStatement
      * @return
      */
-    private IfStatement buildIfStatement() {
+    private IfElseStatement buildIfStatement() {
         SimpleExpression condition = buildExpression();
         consumeTokenWithText("then");
-        String label = consumeTokenWithType(TokenType.WORD).getText();
-        return new IfStatement(this.simple, condition, label);
+        String ifLabel = consumeTokenWithType(TokenType.WORD).getText();
+        SimpleToken elseToken = consumeTokenWithText("else", false);
+        if (elseToken != null){
+            String elseLabel = consumeTokenWithType(TokenType.WORD).getText();
+            return new IfElseStatement(this.simple, condition, ifLabel, elseLabel);
+        }
+        else {
+            return new IfElseStatement(this.simple, condition, ifLabel);
+        }
     }
 
     /**
@@ -168,8 +175,23 @@ public class Parser {
      * @return
      */
     private SimpleToken consumeTokenWithText(String text){
-        if (!matchTokenWithText(text)) throw new Error("Expected " + text + ".");
-        return prevToken(1);
+        return consumeTokenWithText(text, true);
+    }
+
+    /**
+     * tries to match the token with text
+     * if it is a required token, throws an error; otherwise, returns null
+     * @param text
+     * @param required
+     * @return
+     */
+    private SimpleToken consumeTokenWithText(String text, boolean required){
+        boolean found = matchTokenWithText(text);
+        if(found) return prevToken(1);
+        else {
+            if (!required) return null;
+            else throw new Error("Expected " + text + ".");
+        }
     }
 
     /**
