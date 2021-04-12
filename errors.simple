@@ -21,12 +21,12 @@ print 5 % 2
 print 4 % 2
 
 # Simple Loop With If Condition
-i = 10
+i = 970
 loop:
-if i = 0 then end
+if i = 987 then end
 print i
-i = i - 1
-goto loop
+i = i + 1
+jumpto loop
 
 end:
 print "the end"

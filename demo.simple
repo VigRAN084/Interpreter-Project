@@ -1,8 +1,12 @@
+print "Start Demo"
+
+printDemo:
 # Simple Print Commands
 print "Demonstrating print statements, press <Enter> to continue"
 scan x
 print "Hello, world!"
 
+varsDemo:
 # Variable Assignments
 print "Demonstrating variables, press <Enter> to continue"
 scan y
@@ -13,6 +17,7 @@ print b
 c = "This is a string assignment"
 print c
 
+mathDemo:
 # Math Operations
 print "Demonstrating mathematical operations, press <Enter> to continue"
 scan z
@@ -31,6 +36,7 @@ print 5 % 2
 print "4 % 2 = "
 print 4 % 2
 
+scannerDemo:
 #Scanner example
 print "Demonstrating scanner, press <Enter> to continue"
 scan u
@@ -39,22 +45,23 @@ scan e
 print "You just entered: "
 print e
 
-#Demonstrating > for numbers
-print "Demonstrating > and < for numbers"
+greaterthanDemo:
+#Demonstrating > and < for numbers
+print "Demonstrating > for numbers"
 jk = 9
 if jk > 5 then greaterthan
 
 greaterthan:
 print "9 is greater than 5"
 
-#Demonstrating > for numbers
-print "Demonstrating > and < for numbers"
+lessthanDemo:
 jp = 5
+print "Demonstrating < for numbers"
 if jp < 1000000 then lessthan
-
 lessthan:
 print "5 is less than 1000000"
 
+equalsNotequalsForstringDemo:
 #Not equal to String and Number Demonstration
 print "Demonstrating not equal to comparisons for strings"
 print "Enter string1"
@@ -72,6 +79,7 @@ stringequal:
 print "Strings are equal"
 jumpto notequalnum
 
+notequalfornumsDemo:
 #Not equal to for number
 notequalnum:
 print "Demonstrating not equal to comparisons for numbers"
@@ -82,7 +90,7 @@ print "10 is not equal to 920238"
 jumpto stringcompare
 
 #String Compare
-stringcompare:
+stringcompareDemo:
 print "Demonstrating String compare and IfElse, press <Enter> to continue"
 scan g
 print "Enter yes or no"
@@ -99,7 +107,7 @@ print "Executing no section"
 jumpto loopdemo
 
 # Simple Loop With If Condition
-loopdemo:
+loopDemo:
 print "Demonstrating loops, goto, number comparisons, and if statements, press <Enter> to continue"
 scan t
 i = 40
