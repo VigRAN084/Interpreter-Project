@@ -1,9 +1,6 @@
 README
 -------
 
-
-Author: Vignesh Rangarajan
-
 Interpreter
 
 --------------------------
