@@ -3,9 +3,7 @@ README
 
 
 Author: Vignesh Rangarajan
-Period 1
-April 10th, 2021
-CompilerProject
+Interpreter
 
 --------------------------
 
